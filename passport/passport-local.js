@@ -4,7 +4,6 @@ const passport = require('passport');
 const User = require('../models/user');
 const LocalStrategy = require('passport-local').Strategy;
 
-
 passport.serializeUser((user, done) => {
     done(null, user.id); // Saving user id in the session
 });
@@ -20,7 +19,7 @@ passport.use('local.signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, (req, email, password, done) => {
-    User.findOne({'email': email}, (user, err) => {
+    User.findOne({'email': email}, (err, user) => {
 
         // Network or Internet connection error
          if(err) {
@@ -53,7 +52,7 @@ passport.use('local.login', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, (req, email, password, done) => {
-    User.findOne({'email': email}, (user, err) => {
+    User.findOne({'email': email}, (err, user) => {
 
         // Network or Internet connection error
         if(err) {
